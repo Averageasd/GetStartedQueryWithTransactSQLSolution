@@ -7,9 +7,11 @@ SELECT ProductID, Name, ListPrice FROM SalesLT.Product prod WHERE ListPrice >= 1
 SELECT * FROM (SELECT ProductID, Name, ListPrice, 
 	(SELECT AVG(UnitPrice) FROM SalesLT.SalesOrderDetail sod WHERE sod.ProductID = prod.ProductID) AS avgPrice
 		FROM SalesLT.Product AS prod
-	)AS prodWithAvgPrice WHERE avgPrice IS NOT NULL;
+	)AS prodWithAvgPrice;
 
 SELECT * FROM (SELECT ProductID, Name, StandardCost, ListPrice, 
 	(SELECT AVG(UnitPrice) FROM SalesLT.SalesOrderDetail sod WHERE sod.ProductID = prod.ProductID) AS avgPrice
 		FROM SalesLT.Product AS prod
-	)AS prodWithAvgPrice WHERE avgPrice IS NOT NULL AND prodWithAvgPrice.StandardCost > avgPrice ORDER BY ProductID;
+	)AS prodWithAvgPrice 
+		WHERE prodWithAvgPrice.StandardCost > avgPrice 
+		ORDER BY ProductID;
